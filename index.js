@@ -3,9 +3,11 @@
 from 0 to 100
  */
 
-const printNum = () => {
-    for (var i = 0; i <= 100; i++) {
-        setTimeout(() => console.log(i), 1000)
+const printNum = async () => {
+    for (let i = 0; i <= 25; i++) {
+         await new Promise((res) => setTimeout(() => {
+             // res(console.log(i))
+         }, 1000))
     }
 }
 
@@ -14,7 +16,7 @@ printNum()
 /*
 2. Given the array below:
 myArr = ['12-24-2014', '09-2022-23', '12-30-2021', '08-02-2021', '07-15-2018', '2019-12-14', '2022-14-12']
-the array above has serveral dates, written in order month-day-year
+the array above has several dates, written in order month-day-year
 Write the code inside function fixDate(array) below to transform the array to new
 format dates day-month-year
 expected result: ['24-12-2014', '23-09-2022', '30-12-2021', '08-02-2021', '15-07-2018', '14-12-2019', '14-12-2022'] . 
@@ -24,7 +26,21 @@ possibility.
 
 let myArr = ['12-24-2014', '09-2022-23', '12-30-2021', '08-02-2021', '07-15-2018', '2019-12-14', '2022-14-12']
 const fixDate = (array) => {
-    /* provide your code here */
+    return array.map(date => {
+        let year, day, month;
+        let data = date.split('-');
+        for (let number of data) {
+            if (number.length > 2) {
+                year = number
+            } else if (number < 13 && !month) {
+                month = number
+            } else {
+                day = number;
+            }
+        }
+        date = [day, month, year];
+        return date.join('-');
+    })
 }
 let newArr = fixDate(myArr)
 console.log(newArr)
@@ -34,12 +50,34 @@ console.log(newArr)
 Write a counter funtion to print out in console the time difference between 2 given date
 Expected result in the console: 11 days - 13 hours - 38 minutes - 20 seconds
 */
+
 const dateFrom = new Date(500000)
 const dateTo = new Date(1000000000)
+
+const getDate = (stamp) => {
+    const date = new Date(stamp);
+    const years = date.getFullYear();
+    const months = date.getMonth();
+    const days = date.getDate();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+    return [years, months, days, hours, minutes, seconds]
+}
+
 const counter = (from, to) => {
     /* provide your code here */
-}
-const timer = counter()
+    const fromDate = getDate(from);
+    const toDate = getDate(to);
+    const difference = [];
+    for(let i = 0; i < fromDate.length; i++) {
+        difference[i] = toDate[i] - fromDate[i];
+    }
+    return `${difference[2]} days - ${difference[3]} hours - ${difference[4]} minutes - ${difference[5]} seconds`
+ }
+
+
+const timer = counter(dateFrom, dateTo)
 console.log(timer)
 
 /* 
@@ -49,15 +87,20 @@ console.log(timer)
 The data fetched from url should be displayed in index.html.
 */
 
-const getAllCountries = () => {
-    /* provide your code here */
+const getAllCountries = async (url) => {
+    const res = await fetch(url);
+    const data = await res.json();
+    return data.sort((first, second) => {
+        return first.name.common.localeCompare(second.name.common)
+    })
 }
 
-const getSingleCountry = () => {
-    /* provide your code here */
+const getSingleCountry = async (name) => {
+    const res = await fetch(`https://restcountries.com/v3.1/name/${name}`);
+    return await res.json();
 }
 
-getAllCountries()
+getAllCountries('https://restcountries.com/v3.1/all');
 
 /*
 5. Provide logic for function generateNewFolderName, which receive an array as argument. Everytime the function gets called,
@@ -65,9 +108,16 @@ it should check for folder name. If the folder named 'New Folder' does not exist
 If folder 'New Folder' exists, it should add 'New Folder (1)' to array. If 'New Folder (1)' exists, it should add 'New Folder (2)'
 to array, and so on.
 */
-
+let folderNumber = 0;
+let currentFolder = 'New Folder';
 const generateNewFolderName = (existingFolders) => {
-    /*  provide your code here */
+   if(existingFolders.find(name => name === currentFolder)) {
+       folderNumber++;
+       currentFolder = `New Folder (${folderNumber})`;
+       generateNewFolderName(folder);
+   } else {
+       folder.push(currentFolder);
+   }
 }
 
 let folder = []
@@ -96,7 +146,7 @@ class Book {
     }
 }
 
-class TaxableBook {
+class TaxableBook extends Book{
     /* provide your code here */
 }
 
