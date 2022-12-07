@@ -1,6 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 body {
-  background-color: #2A2A35;
+  background-color: #252530;
   color:#fff;
+  font-family: 'Mulish', sans-serif;
 }
 
 .container {
@@ -9,17 +17,96 @@ body {
   padding-bottom: 25px;
 
   &_single {
+    position: relative;
+    padding-bottom: 50px;
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: rgba(#FED672, 0.3);
+      margin-bottom: 30px;
+    }
+    & form {
+      display: flex;
+      flex-direction: column;
+
+      & input {
+        max-width: 400px;
+        font-size: 24px;
+        font-weight: bold;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #ebebeb;
+        padding:10px 2px;
+        border-bottom: 1px solid #ebebeb;
+        margin-bottom: 15px;
+
+        &::placeholder {
+          color:#545260;
+        }
+      }
+    }
+
+    & h2 {
+      margin-bottom: 25px;
+    }
 
     &-btn {
+      width: 100px;
+      padding: 7px 12px;
+      border:none;
+      border-radius: 8px;
+      color: #ebebeb;
+      background-color: #545260;
+      transition: all .2s linear;
+      cursor: pointer;
+      margin-bottom: 35px;
 
+      &:hover {
+        background-color: #FED672;
+        color: #545260;
+      }
     }
 
     &-result {
+        &-item {
+          border: 1px solid #ebebeb;
+          width: fit-content;
+          padding: 25px;
+          border-radius: 15px;
 
+          & h3 {
+            font-size: 30px;
+          }
+
+          & h4 {
+            font-size: 26px;
+            margin-bottom: 5px;
+          }
+
+          & p {
+            margin-bottom: 5px;
+            font-size: 20px;
+          }
+
+          & img {
+            margin-top: 25px;
+          }
+        }
     }
   }
 
   &_all {
+
+    & h2 {
+      margin-bottom: 20px;
+      font-size: 30px;
+    }
 
     &-result {
       display: grid;
@@ -28,18 +115,36 @@ body {
 
       &-item {
         padding: 10px 5px;
-        border: 1px solid grey;
+        border: 1px solid rgba(#ebebeb, .3);
         display: flex;
         flex-direction: column;
         align-items: center;
         border-radius: 15px;
+        transition: all .2s linear;
+
+        &:hover {
+          border: 1px solid #FED672;
+          transform: translateY(-7px);
+        }
+
+        & img {
+          max-width: 140px;
+        }
 
         & h3 {
           text-align: center;
+          margin-bottom: 7px;
+          font-size: 20px;
+        }
+
+        & h4 {
+          font-size: 16px;
+          margin-bottom: 7px;
         }
 
         & p {
-
+          font-size: 18px;
+          margin-bottom: 5px;
         }
       }
     }

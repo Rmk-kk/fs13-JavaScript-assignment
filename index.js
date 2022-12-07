@@ -139,7 +139,7 @@ const handleSingleRequest = (array, container) => {
     }
     const data = array[0];
     const div = createElement(data);
-    div.classList.add('container_single-result');
+    div.classList.add('container_single-result-item');
     container.append(div);
 }
 
@@ -148,11 +148,15 @@ const createElement = item => {
     const header = document.createElement('h3');
     const paragraph = document.createElement('p');
     const population = document.createElement('p');
-
-    header.textContent = `${item.name.common} - ${item.cca3} ${item.flag}`;
-    paragraph.textContent = `Capital: ${item.capital}`;
-    population.textContent = `Population: ${item.population}`;
-    div.append(header, paragraph, population);
+    const region = document.createElement('h4');
+    const image = document.createElement('img');
+    const imageSrc = item.flags.png;
+    image.setAttribute('src', imageSrc);
+    region.innerHTML = `Region: <b>${item.region}`;
+    header.innerHTML = `${item.name.common} - ${item.cca3} ${item.flag}`;
+    paragraph.innerHTML = `Capital: <b>${item.capital}`;
+    population.innerHTML = `Population: <b>${item.population}`;
+    div.append(header, region, paragraph, population, image);
 
     return div;
 }
