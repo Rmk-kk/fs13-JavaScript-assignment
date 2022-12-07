@@ -4,14 +4,15 @@ from 0 to 100
  */
 
 const printNum = async () => {
-    for (let i = 0; i <= 25; i++) {
+    for (let i = 0; i <= 3; i++) {
          await new Promise((res) => setTimeout(() => {
-             // res(console.log(i))
+             console.log(i);
+             res();
          }, 1000))
     }
 }
-
 printNum()
+    .then(() => console.log('done'))
 
 /*
 2. Given the array below:
@@ -87,6 +88,21 @@ console.log(timer)
 The data fetched from url should be displayed in index.html.
 */
 
+const singleCountryContainer = document.querySelector('.container_single-result');
+const allCountriesContainer = document.querySelector('.container_all-result');
+const searchBtn = document.querySelector('.container_single-btn');
+const searchInput = document.querySelector('.container_single-input');
+
+window.addEventListener('DOMContentLoaded', () => {
+    getAllCountries('https://restcountries.com/v3.1/all')
+        .then(data => handleAllRequest(data, allCountriesContainer));
+})
+searchBtn.addEventListener('click', (e) => {
+    e.preventDefault()
+    getSingleCountry(searchInput.value)
+        .then(data => handleSingleRequest(data,singleCountryContainer))
+})
+
 const getAllCountries = async (url) => {
     const res = await fetch(url);
     const data = await res.json();
@@ -100,7 +116,47 @@ const getSingleCountry = async (name) => {
     return await res.json();
 }
 
-getAllCountries('https://restcountries.com/v3.1/all');
+const handleAllRequest = (array, container) => {
+    if(!array.length) {
+       return console.log('No results')
+    }
+    console.log(array[0])
+    array.forEach(item => {
+        const div = createElement(item);
+        div.classList.add('container_all-result-item');
+        container.append(div);
+    })
+}
+
+const handleSingleRequest = (array, container) => {
+    if(container.hasChildNodes()) {
+        container.removeChild(container.firstChild);
+    }
+    if(!array.length) {
+        const error = document.createElement('h2');
+        error.textContent = "Couldn't find any countries, try different name."
+        return container.append(error)
+    }
+    const data = array[0];
+    const div = createElement(data);
+    div.classList.add('container_single-result');
+    container.append(div);
+}
+
+const createElement = item => {
+    const div = document.createElement('div');
+    const header = document.createElement('h3');
+    const paragraph = document.createElement('p');
+    const population = document.createElement('p');
+
+    header.textContent = `${item.name.common} - ${item.cca3} ${item.flag}`;
+    paragraph.textContent = `Capital: ${item.capital}`;
+    population.textContent = `Population: ${item.population}`;
+    div.append(header, paragraph, population);
+
+    return div;
+}
+
 
 /*
 5. Provide logic for function generateNewFolderName, which receive an array as argument. Everytime the function gets called,
