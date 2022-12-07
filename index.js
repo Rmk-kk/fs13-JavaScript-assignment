@@ -141,14 +141,81 @@ Complete class TaxableBook:
 cost 14, profit 0.3 , tax 24% => expected price is 30.43
 */
 class Book {
-    _title
-    constructor(title, cost, profit) {
+    #cost;
+    #profit;
+    _price;
+    _title;
+    constructor(title, cost, profit, price = cost/(1 - profit)) {
+        if(title.length < 1 || cost <= 0 || profit <= 0 || profit > 0.5) {
+            throw new Error("Data is not valid")
+        } else {
+            this._title = title;
+            this.#cost = cost;
+            this.#profit = profit;
+        }
+        this._price = price;
+    }
+
+    //get profit
+    get profit() {
+        return this._price - this.#cost;
+    }
+
+    get profitMultiplier() {
+        return this.#profit;
+    }
+
+    get title() {
+        return this._title
+    }
+    //get price
+    get price() {
+        return this._price;
+    }
+    //change price logic
+    increasePrice = (value) => {
+        this._price += value;
+    }
+    decreasePrice = (value) => {
+        this._price -= value;
+        if(this._price < 0) {
+            this._price = 0;
+        }
     }
 }
 
 class TaxableBook extends Book{
     /* provide your code here */
+    #taxRate;
+    constructor(title, cost, profit, price, taxRate = 24) {
+        super(title, cost, profit, price);
+        this.#taxRate = taxRate;
+    }
+
+    get taxedPrice() {
+        return Math.round(this.price + (this.price * 24 / 100));
+    }
+
+    get taxRate() {
+        return this.#taxRate;
+    }
+
+    get tax() {
+        return this.price * 24 / 100;
+    }
+
 }
 
 const book1 = new Book("The Power of Habits", 14, 0.3)
+console.log(book1);
 const book2 = new TaxableBook("The Power of Habits", 14, 0.3, 24)
+
+console.log(`Book1 title: ${book1.title}`);
+console.log(`Book1 profit: ${book1.profit}$ with ${book1.profitMultiplier} profit multiplier`)
+console.log(`Book1 price: ${book1.price}$`)
+console.log(`Book2 title: ${book2.title}`);
+console.log(`Book2 profit: ${book2.profit}$ with ${book2.profitMultiplier} profit multiplier`)
+console.log(`Book2 price: ${book2.price}$`);
+console.log(`Book2 tax is ${book2.taxRate}%, total price is ${book2.taxedPrice} with tax ${book2.tax}`);
+
+
