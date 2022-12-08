@@ -6,14 +6,13 @@ from 0 to 100
 const printNum = async () => {
     for (let i = 0; i <= 100; i++) {
          await new Promise((res) => setTimeout(() => {
-             console.log(i);
-             res();
+             res(console.log(i));
          }, 1000))
     }
 }
 printNum()
     .then(() => console.log('done'))
-
+    .catch(e => console.error(e));
 /*
 2. Given the array below:
 myArr = ['12-24-2014', '09-2022-23', '12-30-2021', '08-02-2021', '07-15-2018', '2019-12-14', '2022-14-12']
@@ -48,7 +47,7 @@ console.log(newArr)
 
 /*
 3. Counter function
-Write a counter funtion to print out in console the time difference between 2 given date
+Write a counter function to print out in console the time difference between 2 given date
 Expected result in the console: 11 days - 13 hours - 38 minutes - 20 seconds
 */
 
@@ -161,7 +160,6 @@ const createElement = item => {
     return div;
 }
 
-
 /*
 5. Provide logic for function generateNewFolderName, which receive an array as argument. Everytime the function gets called,
 it should check for folder name. If the folder named 'New Folder' does not exist, it should add the name 'New Folder' to array.
@@ -206,13 +204,17 @@ class Book {
     _price;
     _title;
     constructor(title, cost, profit, price = cost/(1 - profit)) {
-        if(title.length < 1 || cost <= 0 || profit <= 0 || profit > 0.5) {
+        if(title.length < 1 ||
+            cost <= 0 ||
+            profit <= 0 ||
+            profit > 0.5 ||
+            typeof title !== 'string')
+        {
             throw new Error("Data is not valid")
-        } else {
-            this._title = title;
-            this.#cost = cost;
-            this.#profit = profit;
         }
+        this._title = title;
+        this.#cost = cost;
+        this.#profit = profit;
         this._price = price;
     }
 
