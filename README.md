@@ -10,6 +10,7 @@
 * HTML 5
 * CSS 3
 * SASS (SCSS)
+* API - [Rest Countries API](https://restcountries.com)
 * JS 
     * Promises
     * Async/ Await

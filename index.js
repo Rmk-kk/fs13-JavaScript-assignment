@@ -4,7 +4,7 @@ from 0 to 100
  */
 
 const printNum = async () => {
-    for (let i = 0; i <= 3; i++) {
+    for (let i = 0; i <= 100; i++) {
          await new Promise((res) => setTimeout(() => {
              console.log(i);
              res();
