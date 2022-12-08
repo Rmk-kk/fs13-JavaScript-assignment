@@ -5,9 +5,11 @@ from 0 to 100
 
 const printNum = async () => {
     for (let i = 0; i <= 100; i++) {
-         await new Promise((res) => setTimeout(() => {
-             res(console.log(i));
-         }, 1000))
+         await new Promise(res => {
+             setTimeout(() => {
+                 res(console.log(i));
+             }, 1000)
+         })
     }
 }
 printNum()
@@ -38,8 +40,7 @@ const fixDate = (array) => {
                 day = number;
             }
         }
-        date = [day, month, year];
-        return date.join('-');
+        return [day, month, year].join('-');
     })
 }
 let newArr = fixDate(myArr)
@@ -166,6 +167,7 @@ it should check for folder name. If the folder named 'New Folder' does not exist
 If folder 'New Folder' exists, it should add 'New Folder (1)' to array. If 'New Folder (1)' exists, it should add 'New Folder (2)'
 to array, and so on.
 */
+
 let folderNumber = 0;
 let currentFolder = 'New Folder';
 const generateNewFolderName = (existingFolders) => {
@@ -255,7 +257,7 @@ class TaxableBook extends Book{
     }
 
     get taxedPrice() {
-        return Math.round(this.price + (this.price * 24 / 100));
+        return Math.round(this.price + (this.price * this.#taxRate/ 100));
     }
 
     get taxRate() {
@@ -263,7 +265,7 @@ class TaxableBook extends Book{
     }
 
     get tax() {
-        return this.price * 24 / 100;
+        return this.price * this.#taxRate / 100;
     }
 
 }
