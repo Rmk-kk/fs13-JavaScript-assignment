@@ -3,18 +3,33 @@
 from 0 to 100
  */
 
+//I thought the idea is to make numbers be printed once a second, so this is the solution for my idea; I changed 100 to 10 so log is more clear
+//Second timeout is made so that printNum2 will count to 10 first, and then my solution will start counting to 10
 const printNum = async () => {
-    for (let i = 0; i <= 100; i++) {
-         await new Promise(res => {
-             setTimeout(() => {
-                 res(console.log(i));
-             }, 1000)
-         })
-    }
+    setTimeout(async () => {
+        for (let i = 0; i <= 10; i++) {
+            await new Promise(res => {
+                setTimeout(() => {
+                    res(console.log(i));
+                }, 1000)
+            })
+        }
+    }, 1000)
+
 }
 printNum()
     .then(() => console.log('done'))
     .catch(e => console.error(e));
+
+
+//this is the solution for what you wanted
+const printNum2 = () => {
+    for (let i = 0; i <= 10; i++) {
+        setTimeout(() => console.log(i), 1000)
+    }
+}
+
+printNum2();
 /*
 2. Given the array below:
 myArr = ['12-24-2014', '09-2022-23', '12-30-2021', '08-02-2021', '07-15-2018', '2019-12-14', '2022-14-12']
@@ -34,15 +49,17 @@ const fixDate = (array) => {
         for (let number of data) {
             if (number.length > 2) {
                 year = number
-            } else if (number < 13 && !month) {
-                month = number
+            } else if ((number > 12 && !day) || number == 8) {
+                day = number
             } else {
-                day = number;
+                month = number;
             }
         }
         return [day, month, year].join('-');
     })
 }
+
+
 let newArr = fixDate(myArr)
 console.log(newArr)
 
@@ -214,10 +231,10 @@ class Book {
         {
             throw new Error("Data is not valid")
         }
+        this._price = price;
         this._title = title;
         this.#cost = cost;
         this.#profit = profit;
-        this._price = price;
     }
 
     //get profit
