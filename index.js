@@ -137,7 +137,6 @@ const handleAllRequest = (array, container) => {
     if(!array.length) {
        return console.log('No results')
     }
-    console.log(array[0])
     array.forEach(item => {
         const div = createElement(item);
         div.classList.add('container_all-result-item');
@@ -288,7 +287,6 @@ class TaxableBook extends Book{
 }
 
 const book1 = new Book("The Power of Habits", 14, 0.3)
-console.log(book1);
 const book2 = new TaxableBook("The Power of Habits", 14, 0.3, 24)
 
 console.log(`Book1 title: ${book1.title}`);
