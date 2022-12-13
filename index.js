@@ -6,19 +6,19 @@ from 0 to 100
 //I thought the idea is to make numbers be printed once a second, so this is the solution for my idea; I changed 100 to 10 so log is more clear
 //Second timeout is made so that printNum2 will count to 10 first, and then my solution will start counting to 10
 const printNum = async () => {
-    setTimeout(async () => {
+    setTimeout( async () => {
         for (let i = 0; i <= 10; i++) {
             await new Promise(res => {
-                setTimeout(() => {
-                    res(console.log(i));
+                setTimeout(async () => {
+                     res(console.log(i))
                 }, 1000)
             })
         }
+        console.log('done');
     }, 1000)
 
 }
 printNum()
-    .then(() => console.log('done'))
     .catch(e => console.error(e));
 
 
@@ -49,7 +49,7 @@ const fixDate = (array) => {
         for (let number of data) {
             if (number.length > 2) {
                 year = number
-            } else if ((number > 12 && !day) || number == 8) {
+            } else if ((number > 12 && !day) || number === '08') {
                 day = number
             } else {
                 month = number;
