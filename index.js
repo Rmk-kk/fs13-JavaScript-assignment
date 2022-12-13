@@ -10,7 +10,7 @@ const printNum = async () => {
         for (let i = 0; i <= 10; i++) {
             await new Promise(res => {
                 setTimeout(async () => {
-                     res(console.log(i))
+                     res(() => console.log(i))
                 }, 1000)
             })
         }
@@ -184,23 +184,27 @@ If folder 'New Folder' exists, it should add 'New Folder (1)' to array. If 'New 
 to array, and so on.
 */
 
-let folderNumber = 0;
-let currentFolder = 'New Folder';
-const generateNewFolderName = (existingFolders) => {
-   if(existingFolders.find(name => name === currentFolder)) {
-       folderNumber++;
-       currentFolder = `New Folder (${folderNumber})`;
-       generateNewFolderName(folder);
-   } else {
-       folder.push(currentFolder);
-   }
+
+
+const generateNewFolderName = (existingFolders, folderName = "New Folder") => {
+    let folderNumber = 0;
+    let currentFolder = folderName;
+    (function generateFolderName(){
+        if(existingFolders.find(name => name === currentFolder)) {
+            folderNumber++;
+            currentFolder = `${folderName} (${folderNumber})`;
+            generateFolderName();
+        } else {
+            return existingFolders.push(currentFolder);
+        }
+    })()
 }
 
 let folder = []
-generateNewFolderName(folder)
-generateNewFolderName(folder)
-generateNewFolderName(folder)
-generateNewFolderName(folder)
+generateNewFolderName(folder);
+generateNewFolderName(folder);
+generateNewFolderName(folder, 'Hello world');
+generateNewFolderName(folder, 'Hello world');
 console.log(folder); //expect to see ['New Folder', 'New Folder (1)', 'New Folder (2)', 'New Folder (3)']
 
 /* 
